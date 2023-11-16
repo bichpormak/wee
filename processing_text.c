@@ -110,7 +110,7 @@ void print_text(struct Text* text)
 {
     for (size_t i = 0; i < text->cntSentence; i++)
     {
-        printf("%ls\n", text->text[i]);
+        wprintf(L"%ls\n", text->text[i]);
         free(text->text[i]);
     }
     free(text->text);

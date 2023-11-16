@@ -11,15 +11,15 @@
 #define COLOR_GREEN     "\033[1;32m"
 #define COLOR_YELLOW    "\033[1;33m"
 
-#define INVALID_OPERATION_ERROR     ""COLOR_RED"Error: "COLOR_WHITE"вы ввели неправильную операцию. Программа завершена\n"
-#define MEMORY_ALLOCATION_ERROR     ""COLOR_RED"Error: "COLOR_WHITE"ошибка выделения памяти\n"
+#define INVALID_OPERATION_ERROR     L""COLOR_RED"Error: "COLOR_WHITE"вы ввели неправильную операцию. Программа завершена\n"
+#define MEMORY_ALLOCATION_ERROR     L""COLOR_RED"Error: "COLOR_WHITE"ошибка выделения памяти\n"
 
 int main()
 {
-    setlocale(LC_ALL, "");
-    printf("Course work for option "VERSION", created by "CREATOR_NAME".\n");
+    setlocale(LC_CTYPE, "");
+    wprintf(L"Course work for option "VERSION", created by "CREATOR_NAME".\n");
     
-    printf("Введите номер операции: ");
+    wprintf(L"Введите номер операции: ");
     int choiceOperation;
     scanf("%d", &choiceOperation);
 
@@ -30,7 +30,7 @@ int main()
     switch (choiceOperation)
     {
         case 0: // вывод текста после обработки
-            print_text(text);
+            print_text(inputText());
             break;
         case 1:
         case 2:
