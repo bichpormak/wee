@@ -3,10 +3,13 @@
 
 #include <wchar.h>
 
+
 struct Sentence
 {
     wchar_t* sentence;
     int lenStr;
+    wchar_t** word;
+    int cntWord;
 };
 
 struct Text
@@ -14,5 +17,7 @@ struct Text
     wchar_t** text;
     int cntSentence;
 };
+
+
 
 #endif

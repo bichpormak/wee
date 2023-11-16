@@ -1,5 +1,7 @@
 #include "processing_text.h"
 
+
+
 struct Sentence* inputSentence()
 {
     struct Sentence* my_sentence = (struct Sentence*) malloc(sizeof(struct Sentence));
@@ -34,6 +36,7 @@ struct Sentence* inputSentence()
 
         my_sentence->sentence[idxSymbol] = symbol;
         idxSymbol++;
+        
 
         if (symbol == L'.')
             break;
@@ -52,6 +55,27 @@ struct Sentence* inputSentence()
 
     my_sentence->sentence[idxSymbol] = L'\0';
     my_sentence->lenStr = idxSymbol;
+
+
+    struct Word* my_word = (struct Word*) malloc(sizeof(struct Word));
+    if (my_word == NULL)
+        return NULL;
+    my_word->word = (wchar_t*) malloc(sizeof(wchar_t)*ADDITIONAL_DATA);
+    if (my_word->word == NULL)
+        return NULL;
+    
+    int cntWord;
+    for(size_t i = 0; i < my_sentence->lenStr; i++)
+    {
+        if (iswalpha(my_sentence->sentence[i]))
+        {
+            my_word->word[i] = my_sentence->sentence[i];
+        }
+        i++;
+        my_word->word[i] = L'\0';
+        cntWord++;
+    }
+    my_word->cntWord = cntWord;
     return my_sentence;
 }
 
@@ -74,17 +98,24 @@ struct Text* inputText()
     struct Sentence* my_sentence;
     while((my_sentence = inputSentence()) != NULL)
     {     
-        /*if(cntSentence != 0)   
+
+        int dublicate_sentence = 0;
+        if(cntSentence != 0)   
         {
             for (size_t i = 0; i < cntSentence; i++)
             {
                 if (wcscasecmp(my_sentence->sentence, my_text->text[i]) == 0)
                 {
                     free(my_sentence->sentence);
-                    continue;
+                    free(my_sentence);
+                    dublicate_sentence = 1;
+                    break;
                 }
             }
-        }*/
+        }
+
+        if (dublicate_sentence == 1)
+            continue;
 
         my_text->text[cntSentence] = my_sentence->sentence;
         cntSentence++;
