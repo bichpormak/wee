@@ -24,8 +24,8 @@ int main()
     scanf("%d", &choiceOperation);
 
     struct Text* text = inputText();
-    if (text == NULL)
-        printf(MEMORY_ALLOCATION_ERROR);
+    //if (text == NULL)
+    //   printf(MEMORY_ALLOCATION_ERROR);
     
     switch (choiceOperation)
     {

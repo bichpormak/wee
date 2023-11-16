@@ -44,7 +44,6 @@ struct Sentence* inputSentence()
             my_sentence->sentence = (wchar_t*) realloc(my_sentence->sentence, sizeof(wchar_t)*capasity);
             if (my_sentence->sentence == NULL)
             {
-                free(my_sentence->sentence);
                 free(my_sentence);
                 return NULL;
             }
@@ -82,11 +81,11 @@ struct Text* inputText()
                 if (wcscasecmp(my_sentence->sentence, my_text->text[i]) == 0)
                 {
                     free(my_sentence->sentence);
-                    free(my_sentence);
                     continue;
                 }
             }
         }*/
+
         my_text->text[cntSentence] = my_sentence->sentence;
         cntSentence++;
         free(my_sentence);
@@ -97,7 +96,6 @@ struct Text* inputText()
             my_text->text = (wchar_t**) realloc(my_text->text, sizeof(wchar_t*)*capasity);
             if (my_text->text == NULL)
             {
-                free(my_text->text);
                 free(my_text);
                 return NULL;
             }
