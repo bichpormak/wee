@@ -29,13 +29,15 @@ int main()
     
     switch (choiceOperation)
     {
-        case 0: print_text(text);
-        case 1: repeat_words(text);
+        case 0: // вывод текста после обработки
+            print_text(text);
+            break;
+        case 1:
         case 2:
         case 3:
         case 4:
         case 5:
-        default: printf(INVALID_OPERATION_ERROR);
+        //default: printf(INVALID_OPERATION_ERROR);
         
     }
 
