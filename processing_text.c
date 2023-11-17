@@ -1,7 +1,5 @@
 #include "processing_text.h"
 
-
-
 struct Sentence* inputSentence()
 {
     struct Sentence* my_sentence = (struct Sentence*) malloc(sizeof(struct Sentence));
@@ -29,10 +27,15 @@ struct Sentence* inputSentence()
                 return NULL;
             continue;
         }
+        if (symbol == '\n')
+        {
+            symbol = ' ';
+        }
         emptyLine = 0;
 
+
         if (idxSymbol == 0 && iswspace(symbol))
-           continue;
+            continue;
 
         my_sentence->sentence[idxSymbol] = symbol;
         idxSymbol++;
@@ -52,30 +55,39 @@ struct Sentence* inputSentence()
             }
         }
     }
-
     my_sentence->sentence[idxSymbol] = L'\0';
     my_sentence->lenStr = idxSymbol;
-
-
-    struct Word* my_word = (struct Word*) malloc(sizeof(struct Word));
-    if (my_word == NULL)
-        return NULL;
-    my_word->word = (wchar_t*) malloc(sizeof(wchar_t)*ADDITIONAL_DATA);
-    if (my_word->word == NULL)
-        return NULL;
     
-    int cntWord;
-    for(size_t i = 0; i < my_sentence->lenStr; i++)
+    
+    my_sentence->word = (wchar_t**) malloc(sizeof(wchar_t*)*ADDITIONAL_DATA);
+    if (my_sentence->word == NULL)
     {
-        if (iswalpha(my_sentence->sentence[i]))
-        {
-            my_word->word[i] = my_sentence->sentence[i];
-        }
-        i++;
-        my_word->word[i] = L'\0';
-        cntWord++;
+        free(my_sentence->sentence);
+        free(my_sentence);
+        return NULL;
     }
-    my_word->cntWord = cntWord;
+
+    int cntWord = 0;
+    wchar_t *token;
+    wchar_t *rest = wcsdup(my_sentence->sentence);
+    wchar_t *original_rest = rest;
+    while ((token = wcstok(rest, L" .", &rest))) {
+        my_sentence->word[cntWord] = wcsdup(token);
+        if (my_sentence->word[cntWord] == NULL) {
+            for(int i = 0; i < cntWord; i++)
+                free(my_sentence->word[i]);
+            free(my_sentence->word);
+            free(my_sentence->sentence);
+            free(my_sentence);
+            return NULL;
+        }
+    cntWord++;
+    }
+
+    my_sentence->cntWord = cntWord;
+
+
+    
     return my_sentence;
 }
 
@@ -107,6 +119,7 @@ struct Text* inputText()
                 if (wcscasecmp(my_sentence->sentence, my_text->text[i]) == 0)
                 {
                     free(my_sentence->sentence);
+                    free(my_sentence->word);
                     free(my_sentence);
                     dublicate_sentence = 1;
                     break;

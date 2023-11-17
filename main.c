@@ -21,33 +21,34 @@ int main()
     
     wprintf(L"Введите номер операции: ");
     int choiceOperation;
-    wscanf(L"%d", &choiceOperation);
-    
-    //struct Text* text = inputText();
-    
-    //if (text == NULL)
-        //wprintf(MEMORY_ALLOCATION_ERROR);
-
-    switch (choiceOperation)
+    if (wscanf(L"%d", &choiceOperation) == 1)
     {
-        case 0:
-            print_text(inputText());
-            break;
-        case 1:
-            //printDuplicateWords(inputText());
-            //break;
-        case 2:
-            break;
-        case 3:
-            break;
+        //struct Text* text = inputText();
+        
+        //if (text == NULL)
+            //wprintf(MEMORY_ALLOCATION_ERROR);
 
-        case 4:
-            break;
-        case 5:
-            break;
-        default: 
-            wprintf(INVALID_OPERATION_ERROR);
+        switch (choiceOperation)
+        {
+            case 0:
+                print_text(inputText());
+                break;
+            case 1:
+                repeat_words(inputSentence());
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+
+            case 4:
+                break;
+            case 5:
+                break;
+            default: 
+                wprintf(INVALID_OPERATION_ERROR);
+        }
     }
-
+    else wprintf(INVALID_OPERATION_ERROR);
     return 0;
 }
