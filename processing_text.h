@@ -9,6 +9,7 @@
 
 #define ADDITIONAL_DATA 100
 
+struct Word* processWordsFromText(struct Text* text);
 struct Sentence* inputSentence();
 struct Text* inputText();
 void print_text(struct Text* text);

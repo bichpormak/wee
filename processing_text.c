@@ -1,5 +1,58 @@
 #include "processing_text.h"
 
+
+struct Word* processWordsFromText(struct Text* text)
+{
+    if (!text || !text->cntSentence || !text->text) return NULL; 
+
+    struct Word* my_word = (struct Word*) malloc (sizeof(struct Word));
+    if (!my_word) return NULL; 
+
+    my_word->word = NULL;
+	my_word->cntWord = 0;
+    
+    my_word->word = (wchar_t**) malloc(sizeof(wchar_t*) * ADDITIONAL_DATA);
+    if (my_word->word == NULL)
+    {
+        free(my_word);
+        return NULL;
+    }
+    for (size_t i = 0; i < text->cntSentence; i++)
+    {
+        int cntWord = 0;
+        wchar_t *token;
+        wchar_t *rest = wcsdup(text->text[i]);
+        int capasity = ADDITIONAL_DATA;
+        while ((token = wcstok(rest, L" .", &rest)))
+        {
+            if (my_word->cntWord >= capasity)
+            {
+                capasity += ADDITIONAL_DATA;
+                my_word->word = realloc(my_word->word, sizeof(wchar_t*) * capasity);
+                if (my_word->word == NULL)
+                {
+                    free(my_word);
+                    return NULL;
+                }
+            }
+            my_word->word[my_word->cntWord] = wcsdup(token);
+            if (my_word->word[my_word->cntWord] == NULL)
+            {
+                for(int j = 0; j < my_word->cntWord; j++)
+                    free(my_word->word[j]);
+                free(my_word->word);
+                free(my_word);
+                return NULL;
+            }
+            cntWord++;
+            my_word->cntWord++;
+        }
+        
+    }
+    return my_word;
+}
+
+
 struct Sentence* inputSentence()
 {
     struct Sentence* my_sentence = (struct Sentence*) malloc(sizeof(struct Sentence));
@@ -27,11 +80,10 @@ struct Sentence* inputSentence()
                 return NULL;
             continue;
         }
-        if (symbol == '\n')
-        {
-            symbol = ' ';
-        }
         emptyLine = 0;
+
+        if (symbol == '\n')
+            continue;
 
 
         if (idxSymbol == 0 && iswspace(symbol))
@@ -59,35 +111,6 @@ struct Sentence* inputSentence()
     my_sentence->lenStr = idxSymbol;
     
     
-    my_sentence->word = (wchar_t**) malloc(sizeof(wchar_t*)*ADDITIONAL_DATA);
-    if (my_sentence->word == NULL)
-    {
-        free(my_sentence->sentence);
-        free(my_sentence);
-        return NULL;
-    }
-
-    int cntWord = 0;
-    wchar_t *token;
-    wchar_t *rest = wcsdup(my_sentence->sentence);
-    wchar_t *original_rest = rest;
-    while ((token = wcstok(rest, L" .", &rest))) {
-        my_sentence->word[cntWord] = wcsdup(token);
-        if (my_sentence->word[cntWord] == NULL) {
-            for(int i = 0; i < cntWord; i++)
-                free(my_sentence->word[i]);
-            free(my_sentence->word);
-            free(my_sentence->sentence);
-            free(my_sentence);
-            return NULL;
-        }
-    cntWord++;
-    }
-
-    my_sentence->cntWord = cntWord;
-
-
-    
     return my_sentence;
 }
 
@@ -107,6 +130,7 @@ struct Text* inputText()
     }
 
     int cntSentence = 0;
+    int cntWord = 0;
     struct Sentence* my_sentence;
     while((my_sentence = inputSentence()) != NULL)
     {     
@@ -119,7 +143,6 @@ struct Text* inputText()
                 if (wcscasecmp(my_sentence->sentence, my_text->text[i]) == 0)
                 {
                     free(my_sentence->sentence);
-                    free(my_sentence->word);
                     free(my_sentence);
                     dublicate_sentence = 1;
                     break;
@@ -145,7 +168,6 @@ struct Text* inputText()
             }
         }
     }
-    
     my_text->cntSentence = cntSentence;
     return my_text;
 }

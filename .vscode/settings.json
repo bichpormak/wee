@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "processing_text.h": "c"
+        "processing_text.h": "c",
+        "repeat_words.h": "c"
     }
 }
