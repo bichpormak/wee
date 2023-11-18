@@ -21,6 +21,4 @@ struct Text
     int cntSentence;
 };
 
-
-
 #endif

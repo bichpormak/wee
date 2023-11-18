@@ -36,6 +36,7 @@ struct Word* processWordsFromText(struct Text* text)
                 }
             }
             my_word->word[my_word->cntWord] = wcsdup(token);
+
             if (my_word->word[my_word->cntWord] == NULL)
             {
                 for(int j = 0; j < my_word->cntWord; j++)
@@ -47,7 +48,6 @@ struct Word* processWordsFromText(struct Text* text)
             cntWord++;
             my_word->cntWord++;
         }
-        
     }
     return my_word;
 }

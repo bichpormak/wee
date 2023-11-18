@@ -2,5 +2,6 @@
     "files.associations": {
         "processing_text.h": "c",
         "repeat_words.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

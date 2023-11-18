@@ -1,6 +1,7 @@
 #include "repeat_words.h"
 #include <string.h>
 
+
 void repeat_words(struct Word* word)
 {
     wchar_t** printedWords = (wchar_t**) malloc(word->cntWord * sizeof(wchar_t*));
@@ -25,6 +26,7 @@ void repeat_words(struct Word* word)
             printedWords[i] = NULL;
             continue;
         }
+        
         printedWords[i] = (wchar_t*) malloc((wcslen(word->word[i]) + 1) * sizeof(wchar_t));
         if (printedWords[i] == NULL)
             break;
@@ -40,7 +42,7 @@ void repeat_words(struct Word* word)
 
         if (cntRepeatWords >= 3)
         {
-            wprintf(L"Слово %ls встретилось %d раз\n", word->word[i], cntRepeatWords);
+            wprintf(L"%ls: %d\n", word->word[i], cntRepeatWords);
             flag = 1;
         }
     }
