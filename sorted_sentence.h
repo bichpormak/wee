@@ -3,6 +3,6 @@
 
 #include "processing_text.h"
 
-void sorted_words(struct Word* word);
+void sorted_sentence(struct Text* text, int flag);
 
 #endif

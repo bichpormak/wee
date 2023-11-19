@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "processing_text.h": "c",
-        "repeat_words.h": "c"
+        "repeat_words.h": "c",
+        "replace_sentence.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

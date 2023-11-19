@@ -21,6 +21,7 @@ void repeat_numbers(struct Text* text)
             wchar_t ch = text->text[i][j];
             if (iswdigit(ch))
                 wprintf(L"%lu", cnt[ch - L'0']);
+                
             else
                 wprintf(L"%lc", ch);
         }

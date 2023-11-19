@@ -2,7 +2,7 @@
 #include "processing_text.h"
 #include "repeat_words.h"
 #include "repeat_numbers.h"
-#include "sorted_words.h"
+#include "sorted_sentence.h"
 
 #define CREATOR_NAME "Pankratov Lev"
 #define VERSION "5.17"
@@ -40,9 +40,10 @@ int main()
                 repeat_numbers(inputText());
                 break;
             case 3:
-                sorted_words(processWordsFromText(inputText()));
+                sorted_sentence(inputText(), 0);
                 break;
             case 4:
+                sorted_sentence(inputText(), 1);
                 break;
             case 5:
                 break;

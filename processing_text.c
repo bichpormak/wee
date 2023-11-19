@@ -53,6 +53,7 @@ struct Word* processWordsFromText(struct Text* text)
 }
 
 
+
 struct Sentence* inputSentence()
 {
     struct Sentence* my_sentence = (struct Sentence*) malloc(sizeof(struct Sentence));
